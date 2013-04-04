@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  track_id: 1
+  latitude: 1.5
+  longitude: 1.5
+
+two:
+  track_id: 1
+  latitude: 1.5
+  longitude: 1.5
