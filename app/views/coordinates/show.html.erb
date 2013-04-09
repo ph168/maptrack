@@ -10,5 +10,7 @@
   <%= @coordinate.longitude %>
 </p>
 
+<%= mapi_coordinate(@coordinate).html_safe %>
+
 <%= link_to 'Edit', edit_coordinate_path(@coordinate) %> |
 <%= link_to 'Back', coordinates_path %>

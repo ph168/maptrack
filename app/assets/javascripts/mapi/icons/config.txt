@@ -1,0 +1,8 @@
+// directory ext width height offsetx offesty
+
+default/pin/ .png 32 32 0.5 1
+
+bars/ .png 32 37 0.5 1
+hotels/ .png 32 37 0.5 1
+restaurants/ .png 32 37 0.5 1
+take-away/ .png 32 37 0.5 1
