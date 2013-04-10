@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gpx version="1.1" creator="MapTrack">
+  <metadata>
+    <name><%= @track.name %></name>
+  </metadata>
+  <trk>
+    <trkseg>
+    <% @track.coordinates.each { |c| %>
+      <trkpt lat="<%= c.latitude %>" lon="<%= c.longitude %>">
+      <% unless c.elevation==nil %>
+        <ele><%= c.elevation %></ele>
+      <% end %>
+      <% unless c.time==nil %>
+        <time><%= c.time.iso8601 %></time>
+      <% end %>
+      </trkpt>
+    <% } %>
+    </trkseg>
+  </trk>
+</gpx>
