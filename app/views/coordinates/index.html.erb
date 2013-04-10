@@ -4,6 +4,8 @@
   <tr>
     <th>Latitude</th>
     <th>Longitude</th>
+    <th>Elevation</th>
+    <th>Time</th>
     <th></th>
     <th></th>
     <th></th>
@@ -13,6 +15,8 @@
   <tr>
     <td><%= coordinate.latitude %></td>
     <td><%= coordinate.longitude %></td>
+    <td><%= coordinate.elevation %></td>
+    <td><%= coordinate.time %></td>
     <td><%= link_to 'Show', coordinate %></td>
     <td><%= link_to 'Edit', edit_coordinate_path(coordinate) %></td>
     <td><%= link_to 'Destroy', coordinate, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -4,10 +4,13 @@
   <b>Latitude:</b>
   <%= @coordinate.latitude %>
 </p>
-
 <p>
   <b>Longitude:</b>
   <%= @coordinate.longitude %>
+</p>
+<p>
+  <b>Elevation:</b>
+  <%= @coordinate.elevation %>
 </p>
 
 <%= mapi_coordinate(@coordinate).html_safe %>

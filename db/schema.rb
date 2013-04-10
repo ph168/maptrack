@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130404213319) do
+ActiveRecord::Schema.define(:version => 20130410130603) do
 
   create_table "coordinates", :force => true do |t|
     t.integer  "track_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20130404213319) do
     t.float    "longitude"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "time"
+    t.float    "elevation"
   end
 
   create_table "tracks", :force => true do |t|

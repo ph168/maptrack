@@ -3,4 +3,8 @@ class Track < ActiveRecord::Base
   
   belongs_to :user
   has_many :coordinates
+  
+  def to_json(options={})
+    super(:include => :coordinates)
+  end
 end
