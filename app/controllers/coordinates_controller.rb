@@ -1,4 +1,6 @@
 class CoordinatesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /coordinates
   # GET /coordinates.json
   def index
