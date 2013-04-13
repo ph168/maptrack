@@ -4,7 +4,7 @@ class CoordinatesController < ApplicationController
   # GET /coordinates
   # GET /coordinates.json
   def index
-    @coordinates = Coordinate.all
+    @coordinates = Coordinate.for_user current_user
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class CoordinatesController < ApplicationController
   # GET /coordinates/1
   # GET /coordinates/1.json
   def show
-    @coordinate = Coordinate.find(params[:id])
+    @coordinate = coordinate_for_current_user params[:id]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,13 +36,14 @@ class CoordinatesController < ApplicationController
 
   # GET /coordinates/1/edit
   def edit
-    @coordinate = Coordinate.find(params[:id])
+    @coordinate = coordinate_for_current_user params[:id]
   end
 
   # POST /coordinates
   # POST /coordinates.json
   def create
     @coordinate = Coordinate.new(params[:coordinate])
+    @coordinate.user_id = current_user.id
 
     respond_to do |format|
       if @coordinate.save
@@ -58,7 +59,8 @@ class CoordinatesController < ApplicationController
   # PUT /coordinates/1
   # PUT /coordinates/1.json
   def update
-    @coordinate = Coordinate.find(params[:id])
+    @coordinate = coordinate_for_current_user params[:id]
+    @coordinate.user_id = current_user.id
 
     respond_to do |format|
       if @coordinate.update_attributes(params[:coordinate])
@@ -74,12 +76,18 @@ class CoordinatesController < ApplicationController
   # DELETE /coordinates/1
   # DELETE /coordinates/1.json
   def destroy
-    @coordinate = Coordinate.find(params[:id])
+    @coordinate = coordinate_for_current_user params[:id]
     @coordinate.destroy
 
     respond_to do |format|
       format.html { redirect_to coordinates_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def coordinate_for_current_user id
+    Coordinate.for_user(current_user).find id
   end
 end

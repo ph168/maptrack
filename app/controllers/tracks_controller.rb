@@ -4,7 +4,7 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = Track.all
+    @tracks = tracks_for_current_user
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = Track.find(params[:id])
+    @track = track_for_current_user params[:id]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,13 +37,14 @@ class TracksController < ApplicationController
 
   # GET /tracks/1/edit
   def edit
-    @track = Track.find(params[:id])
+    @track = track_for_current_user params[:id]
   end
 
   # POST /tracks
   # POST /tracks.json
   def create
     @track = Track.new(params[:track])
+    @track.user = current_user
 
     respond_to do |format|
       if @track.save
@@ -59,7 +60,7 @@ class TracksController < ApplicationController
   # PUT /tracks/1
   # PUT /tracks/1.json
   def update
-    @track = Track.find(params[:id])
+    @track = track_for_current_user params[:id]
 
     respond_to do |format|
       if @track.update_attributes(params[:track])
@@ -75,12 +76,22 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
-    @track = Track.find(params[:id])
+    @track = track_for_current_user params[:id]
     @track.destroy
 
     respond_to do |format|
       format.html { redirect_to tracks_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def tracks_for_current_user
+    Track.for_user current_user
+  end
+
+  def track_for_current_user(id)
+    tracks_for_current_user.find id
   end
 end
