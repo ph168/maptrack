@@ -50,7 +50,7 @@
 			map.addLayer(layerMarkers);
  
 			// Add the Layer with the GPX Track
-			var lgpx = new OpenLayers.Layer.Vector("bla", {
+			var lgpx = new OpenLayers.Layer.Vector("<%= @track.name %>", {
 				strategies: [new OpenLayers.Strategy.Fixed()],
 				protocol: new OpenLayers.Protocol.HTTP({
 					url: "<%= @track.id %>.xml",
