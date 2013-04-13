@@ -1,10 +1,11 @@
 class CoordinatesController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_track
 
   # GET /coordinates
   # GET /coordinates.json
   def index
-    @coordinates = Coordinate.for_user current_user
+    @coordinates = @track.coordinates.for_user current_user
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,13 +43,13 @@ class CoordinatesController < ApplicationController
   # POST /coordinates
   # POST /coordinates.json
   def create
-    @coordinate = Coordinate.new(params[:coordinate])
+    @coordinate = @track.coordinates.build(params[:coordinate])
     @coordinate.user_id = current_user.id
 
     respond_to do |format|
       if @coordinate.save
-        format.html { redirect_to @coordinate, notice: 'Coordinate was successfully created.' }
-        format.json { render json: @coordinate, status: :created, location: @coordinate }
+        format.html { redirect_to [@track, @coordinate], notice: 'Coordinate was successfully created.' }
+        format.json { render json: [@track, @coordinate], status: :created, location: @coordinate }
       else
         format.html { render action: "new" }
         format.json { render json: @coordinate.errors, status: :unprocessable_entity }
@@ -64,7 +65,7 @@ class CoordinatesController < ApplicationController
 
     respond_to do |format|
       if @coordinate.update_attributes(params[:coordinate])
-        format.html { redirect_to @coordinate, notice: 'Coordinate was successfully updated.' }
+        format.html { redirect_to [@track, @coordinate], notice: 'Coordinate was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -80,7 +81,7 @@ class CoordinatesController < ApplicationController
     @coordinate.destroy
 
     respond_to do |format|
-      format.html { redirect_to coordinates_url }
+      format.html { redirect_to track_coordinates_url }
       format.json { head :no_content }
     end
   end
@@ -88,6 +89,10 @@ class CoordinatesController < ApplicationController
   private
 
   def coordinate_for_current_user id
-    Coordinate.for_user(current_user).find id
+    @track.coordinates.for_user(current_user).find id
+  end
+
+  def find_track
+    @track = Track.find params[:track_id]
   end
 end
