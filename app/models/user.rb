@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
   def friends
     users = Array.new
-    friendships.each{ |f| users += f.users.select { |u| u.id != self.id } }
+    friendships.each{ |f| f.confirmed? and users += f.users.select { |u| u.id != self.id } }
     users
   end
 end
