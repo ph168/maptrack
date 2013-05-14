@@ -4,7 +4,8 @@ class TracksController < ApplicationController
   # GET /tracks
   # GET /tracks.json
   def index
-    @tracks = tracks_for_current_user
+    @my_tracks = tracks_for_current_user
+    @friends_tracks = tracks_for_friends_of_current_user
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +16,7 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = track_for_current_user params[:id]
+    @track = track_accessible_for_current_user params[:id]
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,7 +38,7 @@ class TracksController < ApplicationController
 
   # GET /tracks/1/edit
   def edit
-    @track = track_for_current_user params[:id]
+    @track = track_owned_by_current_user params[:id]
   end
 
   # POST /tracks
@@ -60,7 +61,7 @@ class TracksController < ApplicationController
   # PUT /tracks/1
   # PUT /tracks/1.json
   def update
-    @track = track_for_current_user params[:id]
+    @track = track_owned_by_current_user params[:id]
 
     respond_to do |format|
       if @track.update_attributes(params[:track])
@@ -76,7 +77,7 @@ class TracksController < ApplicationController
   # DELETE /tracks/1
   # DELETE /tracks/1.json
   def destroy
-    @track = track_for_current_user params[:id]
+    @track = track_owned_by_current_user params[:id]
     @track.destroy
 
     respond_to do |format|
@@ -91,7 +92,17 @@ class TracksController < ApplicationController
     Track.for_user current_user
   end
 
-  def track_for_current_user(id)
+  def tracks_for_friends_of_current_user
+    Track.find_all_by_user_id(current_user.friends.select{|u| u.id})
+  end
+
+  # Returns the track with given id if it is owned by current_user
+  def track_owned_by_current_user(id)
     tracks_for_current_user.find id
+  end
+
+  # Returns the track with given id if it is accessible for current_user
+  def track_accessible_for_current_user(id)
+    Track.find_by_id_and_user_id(id, current_user.friends.select{|u| u.id} + [current_user.id])
   end
 end

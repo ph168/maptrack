@@ -1,22 +1,24 @@
 <h1>Listing tracks</h1>
 
 <table>
+<% if !@my_tracks.empty? %>
+  <h2>My tracks</h2>
+<% end %>
+<% @my_tracks.each do |track| %>
   <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @tracks.each do |track| %>
-  <tr>
-    <td><%= track.name %>
-    <td><%= link_to 'Show', track %></td>
+    <td><%= link_to track.name, track %></td>
     <td><%= link_to 'Edit', edit_track_path(track) %></td>
     <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
+
+<% if !@friends_tracks.empty? %>
+  <h2>My friend's tracks</h2>
+<% end %>
+<% @friends_tracks.each do |track| %>
+  <p><%= link_to track.name, track %></p>
+<% end %>
 
 <br />
 
