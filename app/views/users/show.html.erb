@@ -1,6 +1,6 @@
 <h1><%= @user.name %></h1>
 
-<% unless current_user.friends.include? @user %>
+<% unless current_user.friends.include? @user or current_user == @user %>
   <%= form_for @friendship, :url => { :action => "request_friendship" } do |f| %>
     <%= f.hidden_field :consumer_id, :value => @user.id %>
     <%= f.submit "Request friendship" %>
