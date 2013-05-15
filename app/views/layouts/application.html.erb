@@ -7,6 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<a href="/" style="float:left">Home</a>
+<% if current_user != nil %>
+  <div class="user">
+    <%= link_to current_user.name, :controller => 'users', :action => 'index' %>
+    <%= link_to "Logout", "/auth/logout", method: :delete %>
+  </div>
+<% end %>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 

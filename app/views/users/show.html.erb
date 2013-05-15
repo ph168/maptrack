@@ -1,0 +1,13 @@
+<h1><%= @user.name %></h1>
+
+<% unless current_user.friends.include? @user %>
+  <%= form_for @friendship, :url => { :action => "request_friendship" } do |f| %>
+    <%= f.hidden_field :consumer_id, :value => @user.id %>
+    <%= f.submit "Request friendship" %>
+  <% end %>
+<% end %>
+
+<h2>Friends</h2>
+<% @user.friends.each do |friend| %>
+  <p><%= link_to friend.name, :controller => 'users', :action => 'show', :name => friend.name %></p>
+<% end %>

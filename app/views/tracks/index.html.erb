@@ -14,7 +14,7 @@
 </table>
 
 <% if !@friends_tracks.empty? %>
-  <h2>My friend's tracks</h2>
+  <h2>My friends' tracks</h2>
 <% end %>
 <% @friends_tracks.each do |track| %>
   <p><%= link_to track.name, track %></p>

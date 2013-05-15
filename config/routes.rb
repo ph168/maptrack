@@ -8,6 +8,11 @@ MapTrack::Application.routes.draw do
     resources :coordinates
   end
 
+  get 'user' => 'users#index'
+  match 'user/:name' => 'users#show', :via => [:get], :constraints => {:name => /.*/}, :format => false
+  post 'user/friendship' => 'users#request_friendship'
+  put 'user/friendship/:id/confirm' => 'users#confirm_friendship'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
