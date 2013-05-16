@@ -4,9 +4,9 @@
 <p>name: <%= @user.name %></p>
 <p>email: <%= @user.email %></p>
 
+<h2>Friends</h2>
 <% friends = @user.friends %>
 <% unless friends.empty? %>
-  <h2>Friends</h2>
   <% friends.each do |friend| %>
     <p><%= link_to friend.name, :controller => 'users', :action => 'show', :name => friend.name %></p>
   <% end %>
