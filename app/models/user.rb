@@ -21,10 +21,17 @@ class User < ActiveRecord::Base
     friendships.select{ |f| f.confirmed? }
   end
 
-  def friends
+  # Retrieve all users from the given friendships
+  # default: confirmed friendships
+  def friends(fships = friendships_confirmed)
     users = Array.new
-    friendships_confirmed.each{ |f| users += f.users.select { |u| u.id != self.id } }
+    fships.each{ |f| users += f.users.select { |u| u.id != self.id } }
     users
+  end
+
+  # Retrieve all users from confirmed and unconfirmed friendships
+  def all_friends
+    friends friendships
   end
 
   def name
