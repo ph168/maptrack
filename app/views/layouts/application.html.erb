@@ -7,17 +7,38 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<a href="/" style="float:left">Home</a>
-<% if current_user != nil %>
-  <div class="user">
-    <%= link_to current_user.name, :controller => 'users', :action => 'index' %>
-    <%= link_to "Logout", "/auth/logout", method: :delete %>
+<div class="site-header">
+  <div class="col size7of8">
+    <div class="cell">
+      <ul class="col nav">
+        <li><a href="/" style="float:left">Home</a></li>
+      </ul>
+    </div>
   </div>
-<% end %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+  <% if current_user != nil %>
+    <div class="col sizefill" style="text-align:right">
+      <div class="cell">
+        <%= render :partial => 'users/userlink', :locals => {:user => current_user} %><br />
+        <span class="icon icon-off"></span>
+        <%= link_to "Logout", "/auth/logout", method: :delete %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="site-body centered-content">
+  <div class="site-center">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-<%= yield %>
-
+    <%= yield %>
+  </div>
+</div>
+<div class="site-center site-footer">
+  <div class="col sizefill">
+    <div class="cell">
+      MapTrack
+    </div>
+  </div>
+</div>
 </body>
 </html>
