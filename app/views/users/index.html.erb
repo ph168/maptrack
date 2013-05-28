@@ -8,7 +8,7 @@
 <% friends = @user.friends %>
 <% unless friends.empty? %>
   <% friends.each do |friend| %>
-    <p><%= link_to friend.name, :controller => 'users', :action => 'show', :name => friend.name %></p>
+    <p><%= render :partial => 'users/userlink', :locals => {:user => friend} %></p>
   <% end %>
 <% end %>
 
@@ -16,19 +16,41 @@
 <% outgoing = @user.friendships_as_initiator.select{|f| !f.confirmed?} %>
 <% unless [incoming, outgoing].empty? %>
   <h3>Requests</h3>
-  <% unless incoming.empty? %>
-    <h4>Incoming</h4>
-    <% incoming.each do |friendship| %>
-      <p>From <%= friendship.initiator.name %>, requested at <%= friendship.created_at %></p>
-        <%= form_for friendship, :url => { :action => "confirm_friendship", :id => friendship.id } do |f| %>
-          <%= f.submit "Confirm" %>
-        <% end %>
+    <% unless incoming.empty? %>
+      <div class="col size1of2">
+        <div class="cell panel">
+          <div class="header">
+            Incoming
+          </div>
+          <% incoming.each do |friendship| %>
+            <div class="body">
+              <div class="cell">
+                From <%= render :partial => 'users/userlink', :locals => {:user => friendship.initiator} %>,
+                requested at <%= friendship.created_at %>
+              </div>
+              <%= form_for friendship, :url => { :action => "confirm_friendship", :id => friendship.id } do |f| %>
+                <%= f.submit "Confirm" %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-  <% end %>
-  <% unless outgoing.empty? %>
-    <h4>Outgoing</h4>
-    <% outgoing.each do |friendship| %>
-      <p>To <%= friendship.consumer.name %>, requested at <%= friendship.created_at %></p>
+    <% unless outgoing.empty? %>
+      <div class="col size1of2">
+        <div class="cell panel">
+          <div class="header">
+            Outgoing
+          </div>
+          <div class="body">
+            <% outgoing.each do |friendship| %>
+              <div class="cell">
+                To <%= render :partial => 'users/userlink', :locals => {:user => friendship.consumer} %>,
+                requested at <%= friendship.created_at %></p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  <% end %>
 <% end %>
