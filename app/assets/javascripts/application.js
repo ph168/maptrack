@@ -17,4 +17,5 @@
 //= require cascade/jquery/jquery.cascade.js
 //= require cascade/jquery/jquery.easing.js
 //= require cascade/jquery/flot/jquery.flot.js
+//= require_tree ../../../vendor/assets/javascripts
 //= require_tree .
