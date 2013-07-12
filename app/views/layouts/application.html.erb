@@ -5,6 +5,13 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <script type="text/javascript">
+    $.cookie.json = true;
+    mapView = new MapView("TODO"); //TODO set or remove
+    /*$(window).unload(function() {
+      mapView.persist();
+    });*/
+  </script>
 </head>
 <body>
 <div class="site-header">
@@ -26,13 +33,26 @@
   <% end %>
 </div>
 <div class="site-body centered-content">
-  <div class="site-center">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+<div class="cell">
+  <div class="col size2of3">
+    <div class="cell">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
 
-    <%= yield %>
+      <%= yield %>
+    </div>
+  </div>
+
+  <div class="col sizefill ">
+    <div style="width:100%; height:480px" id="map"></div>
+    <script type="text/javascript">
+      mapView.setContainer("map");
+      //TODO show something on the map (initially)
+    </script>
   </div>
 </div>
+</div>
+
 <div class="site-center site-footer">
   <div class="col sizefill">
     <div class="cell">
