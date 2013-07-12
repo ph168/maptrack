@@ -1,4 +1,4 @@
-<h1>All about me…</h1>
+<%= render :partial => 'layouts/header', :locals => {:title => "About me"} %>
 
 <h2>Data</h2>
 <p>name: <%= @user.name %></p>
@@ -19,7 +19,7 @@
     <% unless incoming.empty? %>
       <div class="col size1of2">
         <div class="cell panel">
-          <div class="header">
+          <div class="gradient header">
             Incoming
           </div>
           <% incoming.each do |friendship| %>
@@ -39,7 +39,7 @@
     <% unless outgoing.empty? %>
       <div class="col size1of2">
         <div class="cell panel">
-          <div class="header">
+          <div class="gradient header">
             Outgoing
           </div>
           <div class="body">
