@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require cascade/jquery/jquery-2.0.js
 //= require cascade/jquery/jquery.cascade.js
 //= require cascade/jquery/jquery.easing.js
