@@ -10,9 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require cascade/jquery/jquery-2.0.js
 //= require jquery
 //= require jquery_ujs
-//= require cascade/jquery/jquery-2.0.js
 //= require cascade/jquery/jquery.cascade.js
 //= require cascade/jquery/jquery.easing.js
 //= require cascade/jquery/flot/jquery.flot.js
