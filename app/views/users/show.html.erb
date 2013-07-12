@@ -1,4 +1,4 @@
-<h1><%= @user.name %></h1>
+<%= render :partial => 'layouts/header', :locals => {:title => @user.name} %>
 
 <% unless current_user.all_friends.include? @user or current_user == @user %>
   <%= form_for @friendship, :url => { :action => "request_friendship" } do |f| %>
