@@ -2,81 +2,23 @@
 
 <h1><%= @track.name %></h1>
 
-<label><input type="checkbox" id="autorefresh" onchange="setAutoRefresh(this.checked)" />AutoRefresh</label>
-<div style="width:640px; height:480px" id="map"></div>
+<label><input type="checkbox" id="autorefresh" onchange="mapView.setAutoRefresh(this.checked)" />AutoRefresh</label>
+<!--
+TODO move
+<div class="site-header-fixture">
+  <div style="width:640px; height:480px" id="map" class="site-header"></div>
+</div>
+-->
 
 <% if @track.user_id == current_user.id %>
-<%= link_to 'Edit', edit_track_path(@track) %> |
+  <%= link_to 'Edit', edit_track_path(@track) %> |
 <% end %>
 <%= link_to 'Back', tracks_path %>
 
-<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
-
+<!--
 <script type="text/javascript">
-		<% if @track.coordinates.size > 0 %>
-		var lat=<%= @track.coordinates.last.latitude %>;
-		var lon=<%= @track.coordinates.last.longitude %>;
-		<% else %>
-		var lat=0;
-		var lon=0;
-		<% end %>
-		var zoom=15;
-
-		var map; //complex object of type OpenLayers.Map
-		var refreshStrategy;
-
-		function init() {
-			map = new OpenLayers.Map ("map", {
-				controls:[
-					new OpenLayers.Control.Navigation(),
-					new OpenLayers.Control.PanZoomBar(),
-					new OpenLayers.Control.LayerSwitcher(),
-					new OpenLayers.Control.Attribution()],
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-				maxResolution: 156543.0399,
-				numZoomLevels: 19,
-				units: 'm',
-				projection: new OpenLayers.Projection("EPSG:900913"),
-				displayProjection: new OpenLayers.Projection("EPSG:4326")
-			} );
-
-			refreshStrategy = new OpenLayers.Strategy.Refresh({interval: 2000, force: true});
-
-			// Define the map layer
-			layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
-			map.addLayer(layerMapnik);
-			layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
-			map.addLayer(layerCycleMap);
-			layerMarkers = new OpenLayers.Layer.Markers("Current position");
-			map.addLayer(layerMarkers);
-
-			// Add the Layer with the GPX Track
-			var lgpx = new OpenLayers.Layer.Vector("<%= @track.name %>", {
-				strategies: [
-					new OpenLayers.Strategy.Fixed(),
-					refreshStrategy],
-				protocol: new OpenLayers.Protocol.HTTP({
-					url: "<%= @track.id %>.xml",
-					format: new OpenLayers.Format.GPX()
-				}),
-				style: {strokeColor: "green", strokeWidth: 5, strokeOpacity: 0.5},
-				projection: new OpenLayers.Projection("EPSG:4326")
-			});
-			map.addLayer(lgpx);
-			lgpx.events.register("featureadded", lgpx, function(f) {
-				var components = f.feature.geometry.components;
-				map.setCenter(components[components.length - 1].getBounds().getCenterLonLat(), zoom);
-			});
-		}
-
-		function setAutoRefresh(val) {
-			if (val)
-				refreshStrategy.activate();
-			else
-				refreshStrategy.deactivate();
-		}
-
-		init();
-		setAutoRefresh($("#autorefresh").is(":checked"));
+	/*TODO move */
+	mapView = new MapView("map", "<%= @track.name %>", "<%= @track.id %>.xml");
+	mapView.setAutoRefresh($("#autorefresh").is(":checked"));
 </script>
+-->
