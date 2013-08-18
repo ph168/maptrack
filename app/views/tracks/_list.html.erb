@@ -17,7 +17,7 @@
                 <% end %>
               </div>
               <div class="col sizefill" style="text-align:right">
-                <a href="#" onclick='mapView.addGPXLayer("/tracks/<%= track.id %>.xml", "<%= track.name %>")' class="icon icon-eye-open"> show</a>
+                <a href="#" onclick='mapView.addTrack("/tracks/<%= track.id %>.xml", "<%= track.name %>")' class="icon icon-eye-open"> show</a>
                 <br />
                 <% unless defined? readonly and readonly %>
                   <%= link_to ' edit', edit_track_path(track), :class => 'icon icon-edit' %><br />
