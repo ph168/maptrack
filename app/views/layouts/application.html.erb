@@ -6,11 +6,7 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
-    $.cookie.json = true;
-    mapView = new MapView("TODO"); //TODO set or remove
-    /*$(window).unload(function() {
-      mapView.persist();
-    });*/
+    mapView = new MapView("mapView");
   </script>
 </head>
 <body>
@@ -40,7 +36,10 @@
 
 <div class="site-body centered-content">
 <div class="cell">
-  <div class="col size2of3">
+  <div class="col" id="main">
+    <div class="cell" style="float:right">
+    	<span id="resizer" class="icon icon-32" style="cursor:pointer" onclick="resize()"></span>
+    </div>
     <% unless alert.nil? %>
       <div class="cell">
         <span class="label background-red"><%= alert %></span>
@@ -52,9 +51,13 @@
   </div>
 
   <div class="col sizefill ">
+    <div class="cell">
+    	<div id="mapmenu"></div>
+    </div>
     <div style="width:100%; height:480px" id="map"></div>
     <script type="text/javascript">
-      mapView.setContainer("map");
+      mapView.setMenuContainer("mapmenu", "nav", "label");
+      mapView.setMapContainer("map");
       //TODO show something on the map (initially)
     </script>
   </div>
