@@ -10,6 +10,8 @@
   </script>
 </head>
 <body>
+<div class="background-white" id="overlay"></div>
+
 <div class="site-header">
   <div class="col size3of8">
     <div class="cell">
@@ -27,7 +29,7 @@
         </span>
       <% end %>
       <% if current_user != nil %>
-        <%= link_to "", user_path, :class => 'icon icon-32 icon-user color-white' %>
+        <%= link_to "", user_path, :class => 'icon icon-32 icon-user color-white', :remote => true %>
         <%= link_to "", destroy_user_session_path, :method => 'delete', :class => 'icon icon-32 icon-off color-white' %>
       <% end %>
     </div>
