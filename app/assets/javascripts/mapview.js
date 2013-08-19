@@ -123,6 +123,7 @@ var MapView = function(varName) {
 		if (track == null) {
 			liveViewTrack = null;
 		} else {
+			map.updateSize();
 			track.events.register("featureadded", track, doLiveView);
 			liveViewTrack = track;
 		}
