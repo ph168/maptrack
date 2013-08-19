@@ -4,12 +4,18 @@ class UsersController < ApplicationController
   # GET /user
   def index
     @user = current_user
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
   end
 
   # GET /user/:name
   def show
     @user = User.find_by_name params[:name]
     @friendship = Friendship.new
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
   end
 
   # POST /user/friendship
@@ -29,7 +35,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /user/friéndship/:id/confirm
+  # PUT /user/friendship/:id/confirm
   def confirm_friendship
     @friendship = current_user.friendships_as_consumer.find params[:id]
     @friendship.confirmed = true

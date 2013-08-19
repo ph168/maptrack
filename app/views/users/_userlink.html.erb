@@ -1,6 +1,6 @@
 <span class="icon icon-user"></span>
 <% if user == current_user %>
-  <%= link_to user.name, :controller => 'users', :action => 'index' %>
+  <%= link_to user.name, :controller => 'users', :action => 'index', :remote => true %>
 <% else %>
-  <%= link_to user.name, :controller => 'users', :action => 'show', :name => user.name %>
+  <%= link_to user.name, :controller => 'users', :action => 'show', :name => user.name, :remote => true %>
 <% end %>

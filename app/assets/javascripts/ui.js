@@ -1,3 +1,15 @@
+$(handleRemoteLinks = function() {
+	$("a[data-remote]").data('type', 'html')
+	.on("ajax:success", function(e, data, status, xhr) {
+		$.facebox(data);
+		handleRemoteLinks();
+	})
+	.on("ajax:error", function(e, xhr, status, error) {
+		$.facebox(xhr.responseText);
+	});
+});
+
+
 var mainClassDefault = "size2of3";
 var mainClassSmall = "size1of3";
 var resizerClassDefault = "icon-chevron-left";
