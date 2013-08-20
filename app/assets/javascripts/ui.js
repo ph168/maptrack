@@ -1,11 +1,29 @@
-$(handleRemoteLinks = function() {
+$(handleRemote = function() {
 	$("a[data-remote]").data('type', 'html')
 	.on("ajax:success", function(e, data, status, xhr) {
-		$.facebox(data);
-		handleRemoteLinks();
+		if ($(e.target).data('target') == undefined) {
+			$.facebox(data);
+			handleRemote();
+		} else {
+			var target = $($(e.target).data('target'));
+			target.fadeOut(function() {
+				target.html(data).fadeIn(handleRemote);
+			});
+		}
 	})
 	.on("ajax:error", function(e, xhr, status, error) {
-		$.facebox(xhr.responseText);
+		$.facebox(xhr.responseText); //TODO error handling
+	});
+
+	$("form[data-remote]")
+	.on("ajax:success", function(e, data, status, xhr) {
+		var target = $("#" + $.parseHTML(data)[0].id);
+		target.fadeOut(function() {
+			target.replaceWith(data).fadeIn(handleRemote);
+		});
+	})
+	.on("ajax:error", function(e, xhr, status, error) {
+		alert(error); //TODO error handling
 	});
 });
 

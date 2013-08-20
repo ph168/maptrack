@@ -5,31 +5,7 @@
         <%= title %>
       </div>
       <% tracks.each do |track| %>
-        <div class="cell panel">
-          <div class="gradient header">
-            <%= track.name %>
-          </div>
-          <div class="body">
-            <div class="cell">
-              <div class="col size6of8">
-                <% if defined? readonly and readonly %>
-                  <%= render :partial => 'users/userlink', :locals => {:user => track.user} %>
-                <% end %>
-              </div>
-              <div class="col sizefill" style="text-align:right">
-                <a href="#" onclick='mapView.addTrack("/tracks/<%= track.id %>.xml", "<%= track.name %>")' class="icon icon-eye-open"> show</a>
-                <br />
-                <% unless defined? readonly and readonly %>
-                  <%= link_to ' edit', edit_track_path(track), :class => 'icon icon-edit' %><br />
-                  <%= link_to ' destroy', track, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'icon icon-remove' %>
-                <% end %>
-              </div>
-            </div>
-            <div class="cell">
-              <!-- TODO fill in some information about the track -->
-            </div>
-          </div>
-        </div>
+        <%= render :partial => 'tracks/show', :locals => { :track => track, :readonly => readonly } %>
       <% end %>
     </div>
   </div>
