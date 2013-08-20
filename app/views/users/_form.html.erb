@@ -1,0 +1,21 @@
+<div class="body">
+  <div class="cell">
+    <%= form_for(@user, url: {action: "update"}, :remote => true) do |f| %>
+      <div class="col">
+        <div class="cell">
+          <%= f.text_field :username %>
+        </div>
+      </div>
+      <div class="col">
+        <div class="cell">
+          <%= f.text_field :email, :type => 'email' %>
+        </div>
+      </div>
+      <div class="col">
+        <div class="cell">
+          <%= f.submit "Save" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
