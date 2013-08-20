@@ -7,27 +7,26 @@
   <%= csrf_meta_tags %>
   <script type="text/javascript">
     mapView = new MapView("mapView");
+    $(function() {
+    	showMessage("<%= notice %>");
+    	showError("<%= alert %>");
+    });
   </script>
 </head>
 <body>
 <div class="background-white" id="overlay"></div>
 
 <div class="site-header">
-  <div class="col size3of8">
+  <div class="col size7of8">
     <div class="cell">
-      <ul class="col nav">
-        <li><a href="/" style="float:left">Home</a></li>
-      </ul>
+      <span class="fatty">MapTrack</span>&nbsp;
+      <span id="error" class="label background-red"></span>
+      <span id="notice" class="label background-blue"></span>
     </div>
   </div>
 
   <div class="col sizefill" style="text-align:right">
     <div class="cell">
-      <% unless notice.nil? %>
-        <span class="label background-blue">
-          <%= notice %>
-        </span>
-      <% end %>
       <% if current_user != nil %>
         <%= link_to "", user_path, :class => 'icon icon-32 icon-user color-white', :remote => true %>
         <%= link_to "", destroy_user_session_path, :method => 'delete', :class => 'icon icon-32 icon-off color-white' %>
@@ -42,11 +41,6 @@
     <div class="cell" style="float:right">
     	<span id="resizer" class="icon icon-32" style="cursor:pointer" onclick="resize()"></span>
     </div>
-    <% unless alert.nil? %>
-      <div class="cell">
-        <span class="label background-red"><%= alert %></span>
-      </div>
-    <% end %>
     <div class="cell">
       <%= yield %>
     </div>

@@ -12,7 +12,7 @@ $(handleRemote = function() {
 		}
 	})
 	.on("ajax:error", function(e, xhr, status, error) {
-		$.facebox(xhr.responseText); //TODO error handling
+		showError(error);
 	});
 
 	$("form[data-remote]")
@@ -23,8 +23,37 @@ $(handleRemote = function() {
 		});
 	})
 	.on("ajax:error", function(e, xhr, status, error) {
-		alert(error); //TODO error handling
+		showError(error);
 	});
+});
+
+
+function showMessage(text, type = "notice") {
+	var sel = null;
+	if (type == "error")
+		sel = "#error";
+	else
+		sel = "#notice";
+	if (text != "") {
+		$(sel).text(text);
+		$(sel).fadeIn();
+		setTimeout(function() {
+			$(sel).fadeOut(function() {
+				$(sel).text("");
+			});
+		}, 4000);
+	} else {
+		$(sel).hide();
+	}
+}
+
+function showError(text) {
+	showMessage(text, "error");
+}
+
+$(function() {
+	showMessage("");
+	showError("");
 });
 
 
