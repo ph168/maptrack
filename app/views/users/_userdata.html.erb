@@ -1,0 +1,21 @@
+<div id="userdata">
+  <%= link_to 'edit', edit_user_path, :remote => true, :'data-target' => '#userdata' %>
+  <div class="col">
+    <div class="col size1of4">
+      <div class="cell">
+        name
+      </div>
+      <div class="cell">
+        email
+      </div>
+    </div>
+    <div class="col sizefill">
+      <div class="cell">
+        <%= @user.name %>
+      </div>
+      <div class="cell">
+        <%= @user.email %>
+      </div>
+    </div>
+  </div>
+</div>

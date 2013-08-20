@@ -9,6 +9,8 @@ MapTrack::Application.routes.draw do
   end
 
   get 'user' => 'users#index'
+  get 'user/_/edit' => 'users#edit', :as => 'edit_user'
+  put 'user' => 'users#update'
   match 'user/:name' => 'users#show', :via => [:get], :constraints => {:name => /.*/}, :format => false
   post 'user/friendship' => 'users#request_friendship'
   put 'user/friendship/:id/confirm' => 'users#confirm_friendship'

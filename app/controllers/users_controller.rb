@@ -18,6 +18,28 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /user/edit
+  def edit
+    @user = current_user
+
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
+  end
+
+  # PUT /user
+  def update
+    @user = current_user
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { render :partial => 'users/userdata' }
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
   # POST /user/friendship
   def request_friendship
     @friendship = Friendship.new(params[:friendship])

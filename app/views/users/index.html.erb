@@ -1,16 +1,19 @@
 <%= render :partial => 'layouts/header', :locals => {:title => "About me"} %>
 
 <h2>Data</h2>
-<p>name: <%= @user.name %></p>
-<p>email: <%= @user.email %></p>
+<%= render :partial => 'users/userdata' %>
 
 <h2>Friends</h2>
-<% friends = @user.friends %>
-<% unless friends.empty? %>
-  <% friends.each do |friend| %>
-    <p><%= render :partial => 'users/userlink', :locals => {:user => friend} %></p>
-  <% end %>
-<% end %>
+<div class="col">
+  <div class="cell">
+    <% friends = @user.friends %>
+    <% unless friends.empty? %>
+      <% friends.each do |friend| %>
+        <p><%= render :partial => 'users/userlink', :locals => {:user => friend} %></p>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
 <% incoming = @user.friendships_as_consumer.select{|f| !f.confirmed?} %>
 <% outgoing = @user.friendships_as_initiator.select{|f| !f.confirmed?} %>
