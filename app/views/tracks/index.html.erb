@@ -1,9 +1,4 @@
 <%= render :partial => 'layouts/header', :locals => {:title => "Tracks"} %>
 
-<!-- TODO move to actions -->
-<div class="col sizefill">
-  <%= link_to 'New Track', new_track_path %>
-</div>
-
 <%= render :partial => 'list', :locals => {:tracks => @my_tracks, :title => "My tracks", :readonly => false} %>
 <%= render :partial => 'list', :locals => {:tracks => @friends_tracks, :title => "My friends' tracks", :readonly => true} %>
