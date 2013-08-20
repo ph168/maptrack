@@ -32,7 +32,6 @@ class TracksController < ApplicationController
     @track = Track.new
 
     respond_to do |format|
-      format.html # new.html.erb
       format.json { render json: @track }
     end
   end
