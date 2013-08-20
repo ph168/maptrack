@@ -4,6 +4,11 @@ $(handleRemote = function() {
 		if ($(e.target).data('target') == undefined) {
 			$.facebox(data);
 			handleRemote();
+
+			$("#map").hide(); //Workaround
+			$(document).on("close.facebox", function() {
+				$("#map").show();
+			});
 		} else {
 			var target = $($(e.target).data('target'));
 			target.fadeOut(function() {
