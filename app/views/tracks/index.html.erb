@@ -5,5 +5,5 @@
   <%= link_to 'New Track', new_track_path %>
 </div>
 
-<%= render :partial => 'list', :locals => {:tracks => @my_tracks, :title => "My tracks"} %>
+<%= render :partial => 'list', :locals => {:tracks => @my_tracks, :title => "My tracks", :readonly => false} %>
 <%= render :partial => 'list', :locals => {:tracks => @friends_tracks, :title => "My friends' tracks", :readonly => true} %>

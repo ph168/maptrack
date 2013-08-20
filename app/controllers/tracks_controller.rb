@@ -17,9 +17,10 @@ class TracksController < ApplicationController
   # GET /tracks/1.json
   def show
     @track = track_accessible_for_current_user params[:id]
+	readonly = (@track.user != current_user)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render :partial => 'tracks/show', :locals => { :track => @track, :readonly => readonly } }
       format.json { render json: @track }
       format.xml
     end
@@ -39,6 +40,10 @@ class TracksController < ApplicationController
   # GET /tracks/1/edit
   def edit
     @track = track_owned_by_current_user params[:id]
+
+    respond_to do |format|
+      format.js { render :layout => false }
+    end
   end
 
   # POST /tracks
@@ -49,7 +54,7 @@ class TracksController < ApplicationController
 
     respond_to do |format|
       if @track.save
-        format.html { redirect_to @track, notice: 'Track was successfully created.' }
+        format.html { redirect_to tracks_path, notice: 'Track was successfully created.' }
         format.json { render json: @track, status: :created, location: @track }
       else
         format.html { render action: "new" }
