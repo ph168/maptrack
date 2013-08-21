@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  initiator_id: 1
+  initiator_id: 2
   consumer_id: 1
   confirmed: false
 
 two:
   initiator_id: 1
-  consumer_id: 1
-  confirmed: false
+  consumer_id: 2
+  confirmed: true
