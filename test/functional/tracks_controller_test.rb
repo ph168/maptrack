@@ -3,25 +3,27 @@ require 'test_helper'
 class TracksControllerTest < ActionController::TestCase
   setup do
     @track = tracks(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:tracks)
+    assert_not_nil assigns(:my_tracks)
+    assert_not_nil assigns(:friends_tracks)
   end
 
   test "should get new" do
-    get :new
+    get :new, :format => "json"
     assert_response :success
   end
 
   test "should create track" do
     assert_difference('Track.count') do
-      post :create, track: {  }
+      post :create, :format => "json", track: { name: "test" }
     end
 
-    assert_redirected_to track_path(assigns(:track))
+    assert_response :success
   end
 
   test "should show track" do
@@ -30,7 +32,7 @@ class TracksControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: @track
+    get :edit, :format => "js", id: @track
     assert_response :success
   end
 
