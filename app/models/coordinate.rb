@@ -4,6 +4,12 @@ class Coordinate < ActiveRecord::Base
 
   belongs_to :track
 
+  serialize :place, JSON
+
+  after_save do
+    track.save if track.info.needs_update?
+  end
+
   scope :for_user, lambda {|user| where("user_id = ?", user.id).joins(:track).readonly(false)}
 
   validate :user_may_access_track

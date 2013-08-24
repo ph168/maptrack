@@ -4,9 +4,16 @@ class Track < ActiveRecord::Base
   belongs_to :user
   has_many :coordinates, :order => "time"
 
+  serialize :info, TrackInfo
+
+  before_save do
+    info.update! if info.needs_update?
+  end
+
   scope :for_user, lambda {|user| where("user_id = ?", user.id)}
 
   validates :name, :presence => true
+  validates :info, :presence => true
 
   def to_json(options={})
     super(:include => :coordinates)
