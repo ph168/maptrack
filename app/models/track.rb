@@ -6,6 +6,10 @@ class Track < ActiveRecord::Base
 
   serialize :info, TrackInfo
 
+  before_create do
+    info = TrackInfo.new(self) unless info
+  end
+
   before_save do
     info.update! if info.needs_update?
   end

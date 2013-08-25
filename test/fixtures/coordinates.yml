@@ -4,8 +4,10 @@ one:
   track_id: 1
   latitude: 1.5
   longitude: 1.5
+  time: "2013-01-01 00:00:01"
 
 two:
   track_id: 1
   latitude: 1.5
   longitude: 1.5
+  time: "2013-01-01 00:00:02"

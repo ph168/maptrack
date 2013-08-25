@@ -1,7 +1,7 @@
 class TrackInfo
   attr_reader :average_interval
 
-  def initialize(track = nil)
+  def initialize(track = Track.new)
     @track_id = track.id
     @average_interval = 0
     @num = 0
@@ -16,7 +16,7 @@ class TrackInfo
     if info_updated_at.nil?
       coords = trk.coordinates
     else
-      coords = trk.coordinates.where ["created_at > ?", info_updated_at]
+      coords = trk.coordinates.where ["time > ?", info_updated_at]
     end
 
     prev = coords.first
@@ -40,7 +40,7 @@ class TrackInfo
 
   def track_updated_at(trk = track)
     last_coord = trk.coordinates.last
-    last_coord.created_at unless last_coord.nil?
+    last_coord.time unless last_coord.nil?
   end
 
   def updated!(trk)
@@ -48,6 +48,6 @@ class TrackInfo
   end
 
   def track
-    Track.find @track_id
+    @track_id ? Track.find(@track_id) : Track.new
   end
 end
