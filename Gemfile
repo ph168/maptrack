@@ -27,4 +27,4 @@ gem 'jquery-rails'
 
 gem 'devise'
 
-gem 'nominatim'
+gem 'nominatim', :git => 'https://github.com/ph168/nominatim.git'
