@@ -6,6 +6,7 @@ class CoordinateTest < ActiveSupport::TestCase
     @track2 = tracks(:two)
     @coord1 = coordinates(:one)
     @coord2 = coordinates(:two)
+    prepare_nominatim_stub
   end
 
   test "set_place_neg" do

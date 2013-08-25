@@ -7,6 +7,7 @@ gem 'rails', '3.2.13'
 group :development, :test do
   gem 'sqlite3'
   gem 'rake'
+  gem 'webmock'
 end
 group :production do
   gem 'pg'

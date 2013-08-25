@@ -4,6 +4,7 @@ class CoordinatesControllerTest < ActionController::TestCase
   setup do
     @coordinate = coordinates(:one)
     sign_in users(:one)
+    prepare_nominatim_stub
   end
 
   test "should get index" do

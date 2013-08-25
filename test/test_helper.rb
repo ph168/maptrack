@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'webmock/test_unit'
 
 class ActionController::TestCase
   include Devise::TestHelpers
@@ -13,5 +14,11 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  def prepare_nominatim_stub
+    endpoint = Nominatim.config.endpoint
+    stub_http_request(:get, Regexp.new(endpoint + '/reverse'))
+        .to_return(:status => 200, :body => Nominatim::Place.new.to_json)
+    stub_http_request(:get, Regexp.new(endpoint + '/search'))
+        .to_return(:status => 200)
+  end
 end
