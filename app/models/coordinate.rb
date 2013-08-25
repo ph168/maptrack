@@ -6,7 +6,7 @@ class Coordinate < ActiveRecord::Base
 
   serialize :place, JSON
 
-  before_create :set_place
+  before_save :set_place
 
   after_save do
     track.save if track.info.needs_update?
@@ -19,6 +19,23 @@ class Coordinate < ActiveRecord::Base
   validates :longitude, :numericality => true
   validates :elevation, :numericality => true, :allow_nil => true
 
+  def set_place
+    return if self.place
+    coords = track.coordinates
+    if self.persisted? and coords.first != self
+      prev = coords.at(coords.index(self) - 1)
+    else
+      prev = coords.last
+    end
+    if prev.nil? or is_a_long_time_after? prev.time
+      self.place = query_place unless self.place
+    end
+  end
+
+  def is_a_long_time_after? t
+    (time.to_i - t.to_i).abs > (10 * track.info.average_interval)
+  end
+
   private
 
   def user_may_access_track
@@ -27,13 +44,10 @@ class Coordinate < ActiveRecord::Base
     end
   end
 
-  def set_place
-    prev = track.coordinates.last
-    if prev.nil? or (time.to_i - prev.time.to_i) > (10 * track.info.average_interval)
-      query = Nominatim::Reverse.new
-      query.lat latitude
-      query.lon longitude
-      self.place = query.fetch unless self.place
-    end
+  def query_place
+    query = Nominatim::Reverse.new
+    query.lat latitude
+    query.lon longitude
+    query.fetch
   end
 end
