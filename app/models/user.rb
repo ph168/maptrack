@@ -43,9 +43,6 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_name name
-    user = self.find_by_username(name)
-    if user == nil
-      where("email LIKE :prefix", prefix: "#{name}@%")[0]
-    end
+    find_by_username(name) or where("email LIKE :prefix", prefix: "#{name}@%")[0]
   end
 end
