@@ -33,7 +33,7 @@ $(handleRemote = function() {
 });
 
 
-function showMessage(text, type = "notice") {
+function showMessage(text, type) {
 	var sel = null;
 	if (type == "error")
 		sel = "#error";
