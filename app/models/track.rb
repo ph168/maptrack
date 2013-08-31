@@ -22,4 +22,15 @@ class Track < ActiveRecord::Base
   def to_json(options={})
     super(:include => :coordinates)
   end
+
+  def old?
+    return false if coordinates.empty?
+    coordinates.last.is_a_long_time_after? Time.now
+  end
+
+  def close!
+    destination = coordinates.last
+    destination.user_id = user_id
+    destination.set_place!
+  end
 end

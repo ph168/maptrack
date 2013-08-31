@@ -20,15 +20,12 @@ class Coordinate < ActiveRecord::Base
   validates :elevation, :numericality => true, :allow_nil => true
 
   def set_place
-    return if self.place
-    coords = track.coordinates
-    if self.persisted? and coords.first != self
-      prev = coords.at(coords.index(self) - 1)
-    else
-      prev = coords.last
-    end
-    if coords.first == self or prev.nil? or is_a_long_time_after? prev.time
-      self.place = query_place unless self.place
+    may_set_place
+  end
+
+  def set_place!
+    if (may_set_place true)
+      save
     end
   end
 
@@ -62,5 +59,21 @@ class Coordinate < ActiveRecord::Base
     query.lat latitude
     query.lon longitude
     query.fetch
+  end
+
+  def may_set_place forced=false
+    return if self.place
+
+    coords = track.coordinates
+    if self.persisted? and coords.first != self
+      prev = coords.at(coords.index(self) - 1)
+    else
+      prev = coords.last
+    end
+
+    if forced or coords.first == self or prev.nil? or is_a_long_time_after? prev.time
+      self.place = query_place unless self.place
+      return true
+    end
   end
 end
