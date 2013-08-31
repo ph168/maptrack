@@ -36,6 +36,19 @@ class Coordinate < ActiveRecord::Base
     (time.to_i - t.to_i).abs > (10 * track.info.average_interval)
   end
 
+  def distance_to coord
+    # http://stackoverflow.com/questions/365826/calculate-distance-between-2-gps-coordinates
+    dlat = (coord.latitude - latitude) * Math::PI / 180
+    dlon = (coord.longitude - longitude) * Math::PI / 180
+    lat1 = latitude * Math::PI / 180
+    lat2 = coord.latitude * Math::PI / 180
+
+    a = Math.sin(dlat/2) * Math.sin(dlat/2) +
+            Math.sin(dlon/2) * Math.sin(dlon/2) * Math.cos(lat1) * Math.cos(lat2)
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+    6371000 * c
+  end
+
   private
 
   def user_may_access_track

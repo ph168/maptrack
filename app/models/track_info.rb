@@ -1,9 +1,14 @@
 class TrackInfo
-  attr_reader :average_interval
+  attr_reader :average_interval, :duration, :distance, :average_speed, :rise, :fall
 
   def initialize(track = Track.new)
     @track_id = track.id
     @average_interval = 0
+    @duration = 0
+    @distance = 0
+    @average_speed = 0
+    @rise = 0
+    @fall = 0
     @num = 0
     update! track
   end
@@ -25,7 +30,16 @@ class TrackInfo
       if c == prev
         next
       end
+
       @average_interval = (@average_interval * (@num-1) + c.time.to_i - prev.time.to_i) / @num
+      @duration += (c.time.to_i - prev.time.to_i) # [s]
+      @distance += prev.distance_to c # [m]
+      @average_speed = @distance / @duration # [m/s]
+
+      delev = c.elevation.to_f - prev.elevation.to_f
+      @rise += delev if delev > 0
+      @fall += (-delev) if delev < 0
+
       prev = c
     end
 
