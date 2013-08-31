@@ -27,7 +27,7 @@ class Coordinate < ActiveRecord::Base
     else
       prev = coords.last
     end
-    if prev.nil? or is_a_long_time_after? prev.time
+    if coords.first == self or prev.nil? or is_a_long_time_after? prev.time
       self.place = query_place unless self.place
     end
   end
