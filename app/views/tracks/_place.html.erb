@@ -1,0 +1,33 @@
+<ul>
+  <%
+  start = true
+  last = track.coordinates.last
+
+  track.coordinates.each do |coord|
+    unless coord.place.nil?
+      name = coord.place["attrs"]["display_name"]
+      shortname = name.split(", ", 3)[0..1].join ", "
+    else
+      shortname = nil
+    end
+
+    if start
+      start = false
+      text = "from"
+    elsif coord == track.coordinates.last
+      text = "to"
+    else
+      next if shortname.nil?
+      text = "via"
+    end %>
+
+    <div class="col size1of6"><%= text %></div>
+    <div class="col sizefill">
+      <% if shortname %>
+        <a title="<%= name %>"><%= shortname %></a>
+      <% else %>
+        ?
+      <% end %>
+    </div>
+<% end %>
+</ul>
