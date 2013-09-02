@@ -6,7 +6,7 @@
   track.coordinates.each do |coord|
     unless coord.place.nil?
       name = coord.place["attrs"]["display_name"]
-      shortname = name.split(", ", 3)[0..1].join ", "
+      shortname = name.split(", ", 3)[0..1].join ", " unless name.nil?
     else
       shortname = nil
     end
