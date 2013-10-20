@@ -11,6 +11,9 @@
           </div>
         <% end %>
         <%= render :partial => 'tracks/place', :locals => { :track => track } %>
+        <div class="cell">
+          <%= render :partial => 'tracks/info', :locals => { :track => track } %>
+        </div>
       </div>
       <div class="col sizefill" style="text-align:right">
         <a href="#" onclick='mapView.addTrack("/tracks/<%= track.id %>.xml", "<%= track.name %>")' class="icon icon-eye-open"> show</a>

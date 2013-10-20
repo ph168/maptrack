@@ -1,14 +1,18 @@
+require 'duration'
+require 'distance'
+require 'speed'
+
 class TrackInfo
   attr_reader :average_interval, :duration, :distance, :average_speed, :rise, :fall
 
   def initialize(track = Track.new)
     @track_id = track.id
     @average_interval = 0
-    @duration = 0
-    @distance = 0
-    @average_speed = 0
-    @rise = 0
-    @fall = 0
+    @duration = Duration.new
+    @distance = Distance.new
+    @average_speed = Speed.new
+    @rise = Distance.new
+    @fall = Distance.new
     @num = 0
     update! track
   end
@@ -32,18 +36,25 @@ class TrackInfo
       end
 
       @average_interval = (@average_interval * (@num-1) + c.time.to_i - prev.time.to_i) / @num
-      @duration += (c.time.to_i - prev.time.to_i) # [s]
-      @distance += prev.distance_to c # [m]
-      @average_speed = @distance / @duration # [m/s]
+      @duration.value += (c.time.to_i - prev.time.to_i) # [s]
+      @distance.value += prev.distance_to c # [m]
+      @average_speed.value = @distance.value / @duration.value # [m/s]
 
       delev = c.elevation.to_f - prev.elevation.to_f
-      @rise += delev if delev > 0
-      @fall += (-delev) if delev < 0
+      @rise.value += delev if delev > 0
+      @fall.value += (-delev) if delev < 0
 
       prev = c
     end
 
     updated! trk
+  end
+
+  def set_format system
+    self.instance_variables.each do |var|
+      var = self.instance_variable_get var
+      var.set_format(system) if var.is_a? Quantity
+    end
   end
 
   private
