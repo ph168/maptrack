@@ -4,8 +4,6 @@ class Coordinate < ActiveRecord::Base
 
   belongs_to :track
 
-  serialize :place, JSON
-
   before_save :set_place
 
   after_save do

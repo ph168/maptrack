@@ -1,10 +1,10 @@
+require 'track_info'
+
 class Track < ActiveRecord::Base
   attr_accessible :name
 
   belongs_to :user
   has_many :coordinates, :order => "time"
-
-  serialize :info, TrackInfo
 
   before_create do
     info = TrackInfo.new(self) unless info
