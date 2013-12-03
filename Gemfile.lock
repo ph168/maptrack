@@ -69,8 +69,15 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.24)
+    mongoid (3.1.5)
+      activemodel (~> 3.2)
+      moped (~> 1.4)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.29)
+    moped (1.5.1)
     multi_json (1.7.9)
     multipart-post (1.2.0)
+    origin (1.1.0)
     orm_adapter (0.4.0)
     pg (0.16.0)
     polyglot (0.3.3)
@@ -143,6 +150,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   jquery-rails
+  mongoid
   nominatim!
   pg
   rails (= 3.2.13)
