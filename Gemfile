@@ -2,7 +2,11 @@ source 'https://rubygems.org'
 
 ruby '2.1.0'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.2'
+gem 'activesupport', '4.0.2'
+
+# Rails 4
+gem 'protected_attributes'
 
 group :development, :test do
   gem 'sqlite3'
@@ -22,10 +26,10 @@ gem 'mongoid'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails',   '~> 4.0.1'
+  gem 'coffee-rails', '~> 4.0.1'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.3.0'
 end
 
 gem 'jquery-rails'
