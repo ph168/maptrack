@@ -4,6 +4,8 @@ class Coordinate < ActiveRecord::Base
 
   belongs_to :track
 
+  has_one_document :place
+
   before_save :set_place
 
   after_save do

@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
 
+  has_one_document :user_option
+
   has_many :tracks
 
   has_many :friendships_as_initiator, :class_name => "Friendship", :foreign_key => "initiator_id"
