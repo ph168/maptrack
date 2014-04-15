@@ -6,18 +6,18 @@ class Track < ActiveRecord::Base
 
   has_one_document :summary
 
-  before_create do
-    info = TrackInfo.new(self) unless info
-  end
+#  before_create do
+#    summary = Summary.new(self) unless summary
+#  end
 
   before_save do
-    info.update! if info.needs_update?
+    summary.update! if summary.needs_update?
   end
 
   scope :for_user, lambda {|user| where("user_id = ?", user.id)}
 
   validates :name, :presence => true
-  validates :info, :presence => true
+  validates :summary, :presence => true
 
   def to_json(options={})
     super(:include => :coordinates)

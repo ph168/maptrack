@@ -1,6 +1,7 @@
-<% info = track.info %>
+<% info = track.summary %>
+<% if info %>
 <div class="col size1of3">
-  <span class="icon icon-time"></span>&nbsp;<%= info.duration.format_with ImperialSystem.new %>
+  <span class="icon icon-time"></span>&nbsp;<%= info.duration %>
 </div>
 <div class="col size1of3">
   <span class="icon icon-road"></span>&nbsp;<%= info.distance %>&nbsp;km<br />
@@ -10,3 +11,4 @@
 <div class="col size1of3">
   <span class="icon icon-dashboard"></span>&nbsp;<%= info.average_speed %>
 </div>
+<% end %>

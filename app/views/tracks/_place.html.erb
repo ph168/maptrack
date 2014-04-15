@@ -4,8 +4,8 @@
   last = track.coordinates.last
 
   track.coordinates.each do |coord|
-    unless coord.place.nil?
-      name = coord.place["attrs"]["display_name"]
+    unless coord.place.data.nil?
+      name = coord.place.data["display_name"]
       shortname = name.split(", ", 3)[0..1].join ", " unless name.nil?
     else
       shortname = nil

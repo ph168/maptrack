@@ -13,8 +13,8 @@
       <% unless c.time==nil %>
         <time><%= c.time.iso8601 %></time>
       <% end %>
-      <% unless c.place==nil %>
-        <name><%= c.place["attrs"]["display_name"] %></name>
+      <% unless c.place.data==nil %>
+        <name><%= c.place.data["display_name"] %></name>
       <% end %>
       </trkpt>
     <% } %>

@@ -9,7 +9,7 @@ class Coordinate < ActiveRecord::Base
   before_save :set_place
 
   after_save do
-    track.save if track.info.needs_update?
+    track.save if track.summary.needs_update?
   end
 
   scope :for_user, lambda {|user| where("user_id = ?", user.id).joins(:track).readonly(false)}
@@ -24,13 +24,11 @@ class Coordinate < ActiveRecord::Base
   end
 
   def set_place!
-    if (may_set_place true)
-      save
-    end
+    may_set_place true
   end
 
   def is_a_long_time_after? t
-    (time.to_i - t.to_i).abs > (10 * track.info.average_interval)
+    (time.to_i - t.to_i).abs > (10 * track.summary.average_interval)
   end
 
   def distance_to coord
@@ -62,7 +60,7 @@ class Coordinate < ActiveRecord::Base
   end
 
   def may_set_place forced=false
-    return if self.place
+    return if self.place.data
 
     coords = track.coordinates
     if self.persisted? and coords.first != self
@@ -72,7 +70,9 @@ class Coordinate < ActiveRecord::Base
     end
 
     if forced or coords.first == self or prev.nil? or is_a_long_time_after? prev.time
-      self.place = query_place unless self.place
+      place = self.place
+      place.data = query_place.instance_variable_get(:@attrs) unless self.place.data
+      place.save
       return true
     end
   end
