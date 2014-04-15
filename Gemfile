@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.1.1'
 
 gem 'rails', '4.0.2'
 gem 'activesupport', '4.0.2'
@@ -21,8 +21,7 @@ end
 
 gem 'taps'
 
-gem 'mongoid'
-gem 'bson_ext'
+gem 'mongoid', github: 'mongoid/mongoid'
 
 # Gems used only for assets and not required
 # in production environments by default.
