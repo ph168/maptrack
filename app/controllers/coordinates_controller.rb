@@ -49,7 +49,7 @@ class CoordinatesController < ApplicationController
     respond_to do |format|
       if @coordinate.save
         format.html { redirect_to [@track, @coordinate], notice: 'Coordinate was successfully created.' }
-        format.json { render json: [@track, @coordinate], status: :created, location: @coordinate }
+        format.json { render json: @coordinate, status: :created }
       else
         format.html { render action: "new" }
         format.json { render json: @coordinate.errors, status: :unprocessable_entity }
