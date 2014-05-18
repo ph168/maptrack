@@ -24,6 +24,11 @@ class CoordinatesController < ApplicationController
     end
   end
 
+  def show_last
+    params[:id] = @track.coordinates.last.id
+    show
+  end
+
   # GET /coordinates/new
   # GET /coordinates/new.json
   def new

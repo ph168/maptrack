@@ -5,6 +5,7 @@ MapTrack::Application.routes.draw do
   root :to => "tracks#index"
 
   resources :tracks do
+    get 'coordinates/last' => 'coordinates#show_last'
     resources :coordinates
   end
 
