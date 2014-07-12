@@ -6,7 +6,10 @@ MapTrack::Application.routes.draw do
 
   resources :tracks do
     get 'coordinates/last' => 'coordinates#show_last'
-    resources :coordinates
+    get 'places' => 'coordinates#places'
+    resources :coordinates do
+      get 'place' => 'coordinates#place'
+    end
   end
 
   get 'user' => 'users#index'

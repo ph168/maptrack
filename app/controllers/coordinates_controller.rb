@@ -29,6 +29,27 @@ class CoordinatesController < ApplicationController
     show
   end
 
+  # GET /coordinates/1/place(.:format)
+  def place
+    @coordinate = coordinate_for_current_user params[:coordinate_id]
+    place = @coordinate.place
+    if place.nil? or place.data.nil?
+      head :not_found
+      return
+    end
+    respond_to do |format|
+      format.json { render json: place }
+    end
+  end
+
+  # GET /places(.:format)
+  def places
+    places = Place.in(coordinate_id: @track.coordinates.map{ |c| c.id }).each.to_a
+    respond_to do |format|
+      format.json { render json: places }
+    end
+  end
+
   # GET /coordinates/new
   # GET /coordinates/new.json
   def new
