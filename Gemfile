@@ -5,6 +5,8 @@ ruby '2.1.2'
 gem 'rails', '4.0.2'
 gem 'activesupport', '4.0.2'
 
+gem 'angular_rails_csrf'
+
 # Rails 4
 gem 'protected_attributes'
 
