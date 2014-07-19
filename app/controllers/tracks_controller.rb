@@ -9,7 +9,7 @@ class TracksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @tracks }
+      format.json { render :json => @my_tracks + @friends_tracks, :include => :summary }
     end
   end
 
@@ -18,7 +18,7 @@ class TracksController < ApplicationController
   def show
     @track = track_accessible_for_current_user params[:id]
     @track.summary.set_format MetricSystem.new
-	readonly = (@track.user != current_user)
+    readonly = (@track.user != current_user)
 
     respond_to do |format|
       format.html { render :partial => 'tracks/show', :locals => { :track => @track, :readonly => readonly } }

@@ -44,6 +44,10 @@ class Coordinate < ActiveRecord::Base
     6371000 * c
   end
 
+  def to_json(options={})
+    super(:include => :place)
+  end
+
   private
 
   def user_may_access_track

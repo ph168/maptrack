@@ -20,7 +20,7 @@ class Track < ActiveRecord::Base
   validates :summary, :presence => true
 
   def to_json(options={})
-    super(:include => :coordinates)
+    super(:include => [:coordinates, :summary])
   end
 
   def old?
