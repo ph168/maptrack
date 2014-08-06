@@ -42,14 +42,6 @@ class CoordinatesController < ApplicationController
     end
   end
 
-  # GET /places(.:format)
-  def places
-    places = Place.in(coordinate_id: @track.coordinates.map{ |c| c.id }).each.to_a
-    respond_to do |format|
-      format.json { render json: places }
-    end
-  end
-
   # GET /coordinates/new
   # GET /coordinates/new.json
   def new
