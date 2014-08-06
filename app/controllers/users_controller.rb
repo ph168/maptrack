@@ -6,6 +6,7 @@ class UsersController < ApplicationController
     @user = current_user
     respond_to do |format|
       format.html { render :layout => false }
+      format.json { render :json => current_user }
     end
   end
 
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
     @friendship = Friendship.new
     respond_to do |format|
       format.js { render :layout => false }
+      format.json { render :json => user }
     end
   end
 
@@ -24,6 +26,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.js { render :layout => false }
+      format.json { render :json => user }
     end
   end
 
@@ -34,8 +37,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { render :partial => 'users/userdata' }
+	format.json { head :no_content }
       else
         format.html { render action: "edit" }
+	format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end

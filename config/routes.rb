@@ -16,7 +16,7 @@ MapTrack::Application.routes.draw do
   get 'user/_/edit' => 'users#edit', :as => 'edit_user'
   put 'user' => 'users#update'
   patch 'user' => 'users#update'
-  match 'user/:name' => 'users#show', :via => [:get], :constraints => {:name => /.*/}, :format => false
+  match 'user/:name.:format' => 'users#show', :via => [:get], :constraints => {:name => /.*/}, :format => false
   post 'user/friendship' => 'users#request_friendship'
   put 'user/friendship/:id/confirm' => 'users#confirm_friendship'
   patch 'user/friendship/:id/confirm' => 'users#confirm_friendship'
