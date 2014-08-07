@@ -21,12 +21,14 @@ class Summary
     self_updated_at != track_updated_at
   end
 
-  def update!(trk = track)
+  def update!(trk = Track.find(track_id))
     if self_updated_at.nil?
       coords = trk.coordinates
     else
       coords = trk.coordinates.where ["time > ?", self_updated_at]
     end
+
+    return if coords.size <= 1
 
     prev = coords.first
     coords.each do |c|

@@ -6,10 +6,9 @@ class Coordinate < ActiveRecord::Base
 
   has_one_document :place
 
-  before_save :set_place
-
   after_save do
-    track.save if track.summary.needs_update?
+    track.summary.update!
+    self.delay.set_place
   end
 
   scope :for_user, lambda {|user| where("user_id = ?", user.id).joins(:track).readonly(false)}
@@ -28,6 +27,7 @@ class Coordinate < ActiveRecord::Base
   end
 
   def is_a_long_time_after? t
+    return false if track.summary.average_interval == 0.0
     (time.to_i - t.to_i).abs > (10 * track.summary.average_interval)
   end
 
@@ -68,7 +68,7 @@ class Coordinate < ActiveRecord::Base
 
     coords = track.coordinates
     if self.persisted? and coords.first != self
-      prev = coords.at(coords.index(self) - 1)
+      prev = coords.where("id < ?", id).order("id").last
     else
       prev = coords.last
     end

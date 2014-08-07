@@ -60,6 +60,12 @@ GEM
     connection_pool (2.0.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
+    daemons (1.1.9)
+    delayed_job (4.0.2)
+      activesupport (>= 3.0, < 4.2)
+    delayed_job_mongoid (2.1.0)
+      delayed_job (>= 3.0, < 5)
+      mongoid (>= 3.0, < 5)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -162,6 +168,8 @@ DEPENDENCIES
   activesupport (= 4.0.2)
   angular_rails_csrf
   coffee-rails (~> 4.0.1)
+  daemons
+  delayed_job_mongoid
   devise
   jquery-rails
   mongoid!
