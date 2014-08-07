@@ -91,6 +91,17 @@ class TracksController < ApplicationController
     end
   end
 
+  # PUT /tracks/1/close
+  def close
+    track = track_owned_by_current_user params[:id]
+    track.close!
+
+    respond_to do |format|
+      format.html { redirect_to @track, notice: 'Track was successfully closed.' }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def tracks_for_current_user
