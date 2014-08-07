@@ -1,6 +1,6 @@
 MapTrack::Application.routes.draw do
 
-  devise_for :users, :path => "auth", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in' }, :controllers => { :sessions => 'sessions' }
+  devise_for :users, :path => "auth", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'secret', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'cmon_let_me_in' }, :controllers => { :sessions => 'sessions', :registrations => 'registrations' }
 
   root :to => "tracks#index"
 
@@ -12,6 +12,8 @@ MapTrack::Application.routes.draw do
     end
     resources :places
   end
+
+  get 'tracking/:token/track' => 'tracking#track'
 
   get 'user' => 'users#index'
   get 'user/_/edit' => 'users#edit', :as => 'edit_user'
