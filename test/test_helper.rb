@@ -16,9 +16,9 @@ class ActiveSupport::TestCase
 
   def prepare_nominatim_stub
     endpoint = Nominatim.config.endpoint
-    stub_http_request(:get, Regexp.new(endpoint + '/reverse'))
+    WebMock::stub_http_request(:get, Regexp.new(endpoint + '/reverse'))
         .to_return(:status => 200, :body => Nominatim::Place.new.to_json)
-    stub_http_request(:get, Regexp.new(endpoint + '/search'))
+    WebMock::stub_http_request(:get, Regexp.new(endpoint + '/search'))
         .to_return(:status => 200)
   end
 end
