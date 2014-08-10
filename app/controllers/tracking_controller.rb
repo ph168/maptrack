@@ -6,6 +6,7 @@ class TrackingController < ApplicationController
 
   def track
     coordinate = @track.coordinates.build params
+    coordinate.time = Time.at(params[:millis].to_i / 1000) if params[:millis]
     coordinate.user_id = @user.id
     if coordinate.save
       head :ok
