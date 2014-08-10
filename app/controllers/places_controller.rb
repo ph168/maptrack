@@ -1,6 +1,12 @@
 class PlacesController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :find_track
+  include TracksHelper
+
+  before_filter do
+    unless find_shared_track
+      authenticate_user!
+      find_track
+    end
+  end
 
   # GET /places
   def index

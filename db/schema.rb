@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807225800) do
+ActiveRecord::Schema.define(version: 20140810171700) do
 
   create_table "coordinates", force: true do |t|
     t.integer  "track_id"
@@ -34,8 +34,10 @@ ActiveRecord::Schema.define(version: 20140807225800) do
   create_table "tracks", force: true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.boolean  "public"
+    t.string   "share_token"
   end
 
   create_table "users", force: true do |t|

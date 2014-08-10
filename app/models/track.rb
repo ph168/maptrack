@@ -1,5 +1,5 @@
 class Track < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :public, :share_token
 
   belongs_to :user
   has_many :coordinates, :order => "time"
@@ -10,6 +10,10 @@ class Track < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :summary, :presence => true
+
+  before_save do
+    self.share_token = Devise.friendly_token if self.share_token.nil?
+  end
 
   def to_json(options={})
     super(:include => [:coordinates, :summary])

@@ -13,6 +13,8 @@ MapTrack::Application.routes.draw do
     resources :places
   end
 
+  get 'tracks/public/:share_token' => 'tracks#show'
+  get 'tracks/public/:share_token/places' => 'places#index'
   get 'tracking/:token/track' => 'tracking#track'
 
   get 'user' => 'users#index'

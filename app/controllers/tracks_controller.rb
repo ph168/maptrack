@@ -1,5 +1,9 @@
 class TracksController < ApplicationController
-  before_filter :authenticate_user!
+  include TracksHelper
+
+  before_filter do
+    find_shared_track or authenticate_user!
+  end
 
   # GET /tracks
   # GET /tracks.json
@@ -16,8 +20,10 @@ class TracksController < ApplicationController
   # GET /tracks/1
   # GET /tracks/1.json
   def show
-    @track = track_accessible_for_current_user params[:id]
-    @track.summary.set_format MetricSystem.new
+    unless @track
+      @track = track_accessible_for_current_user params[:id]
+      @track.summary.set_format MetricSystem.new
+    end
     readonly = (@track.user != current_user)
 
     respond_to do |format|
