@@ -23,9 +23,9 @@ class TrackingController < ApplicationController
   end
 
   def find_track
-    @track = Track.find_by_name params[:track]
+    @track = Track.find_by_name params[:trackname]
     unless @track
-      @track = Track.new :name => params[:track]
+      @track = Track.new :name => params[:trackname]
       @track.user = @user
       head :unprocessable_entity unless @track.save
     end
