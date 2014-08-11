@@ -12,6 +12,7 @@ class Track < ActiveRecord::Base
   validates :summary, :presence => true
 
   before_save do
+    self.public = false if self.public.nil?
     self.share_token = Devise.friendly_token if self.share_token.nil?
   end
 
