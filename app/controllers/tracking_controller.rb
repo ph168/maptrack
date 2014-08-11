@@ -23,7 +23,7 @@ class TrackingController < ApplicationController
   end
 
   def find_track
-    @track = Track.find_by_name params[:trackname]
+    @track = Track.find_by_user_id_and_name(@user.id, params[:trackname])
     unless @track
       @track = Track.new :name => params[:trackname]
       @track.user = @user
