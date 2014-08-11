@@ -19,7 +19,7 @@ class Coordinate < ActiveRecord::Base
   validates :elevation, :numericality => true, :allow_nil => true
 
   def set_place
-    may_set_place
+    may_set_place false
   end
 
   def set_place!
@@ -63,7 +63,7 @@ class Coordinate < ActiveRecord::Base
     query.fetch
   end
 
-  def may_set_place forced=false
+  def may_set_place(forced)
     return if self.place.data
 
     coords = track.coordinates
