@@ -50,4 +50,8 @@ class User < ActiveRecord::Base
   def self.find_by_name name
     find_by_username(name) or where("email LIKE :prefix", prefix: "#{name}@%")[0]
   end
+
+  def to_json(options={})
+    super(:include => [:friendships])
+  end
 end
