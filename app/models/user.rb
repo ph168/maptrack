@@ -16,6 +16,10 @@ class User < ActiveRecord::Base
 
   has_many :tracks
 
+  validates :username, :uniqueness => true
+  validates :email, :uniqueness => true
+  validates :token, :uniqueness => true
+
   has_many :friendships_as_initiator, :class_name => "Friendship", :foreign_key => "initiator_id"
   has_many :friendships_as_consumer, :class_name => "Friendship", :foreign_key => "consumer_id"
   def friendships

@@ -10,6 +10,7 @@ class Track < ActiveRecord::Base
 
   validates :name, :presence => true
   validates :summary, :presence => true
+  validates :share_token, :uniqueness => true
 
   before_save do
     self.public = false if self.public.nil?
