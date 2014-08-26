@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @friendship = Friendship.new
     respond_to do |format|
       format.js { render :layout => false }
-      format.json { render :json => user }
+      format.json { render :json => @user }
     end
   end
 
