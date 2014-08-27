@@ -25,4 +25,5 @@ MapTrack::Application.routes.draw do
   post 'user/friendship' => 'users#request_friendship'
   put 'user/friendship/:id/confirm' => 'users#confirm_friendship'
   patch 'user/friendship/:id/confirm' => 'users#confirm_friendship'
+  delete 'user/friendship/:id' => 'users#destroy_friendship'
 end

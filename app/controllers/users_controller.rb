@@ -77,4 +77,15 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  # DELETE /user/friendship/:id
+  def destroy_friendship
+    @friendship = current_user.friendships.find(params[:id]).first
+    @friendship.destroy
+
+    respond_to do |format|
+      format.html { redirect_to :action => :index, notice: 'Friendship was successfully removed.' }
+      format.json { head :no_content }
+    end
+  end
 end
