@@ -56,6 +56,13 @@ class User < ActiveRecord::Base
   end
 
   def to_json(options={})
-    super(:include => [:friendships])
+    super(:include => [{ :friendships =>
+      {
+        :include => [
+          {:initiator => {:only => :username}},
+          {:consumer => {:only => :username}}
+        ]
+      }
+    }, :friends => {:only => :username}])
   end
 end

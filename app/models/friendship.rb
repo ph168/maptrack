@@ -3,6 +3,7 @@ class Friendship < ActiveRecord::Base
   belongs_to :initiator, :class_name => "User"
   belongs_to :consumer, :class_name => "User"
 
+  validates_presence_of :initiator, :consumer
   validate :no_self_friendship
 
   def no_self_friendship
