@@ -10,6 +10,14 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /user/search?q=query
+  def search
+    users = User.find_by_query params[:q]
+    respond_to do |format|
+      format.json { render :json => users.to_json(:only => [:id, :username], :methods => :email_hash) }
+    end
+  end
+
   # GET /user/:name
   def show
     @user = User.find_by_name params[:name]

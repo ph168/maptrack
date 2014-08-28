@@ -18,6 +18,7 @@ MapTrack::Application.routes.draw do
   get 'tracking/:token/track' => 'tracking#track'
 
   get 'user' => 'users#index'
+  get 'user/search' => 'users#search'
   get 'user/_/edit' => 'users#edit', :as => 'edit_user'
   put 'user' => 'users#update'
   patch 'user' => 'users#update'

@@ -5,23 +5,34 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me, :token
+  attr_accessor :email_hash
+
+  after_initialize do
+    self.email_hash = Digest::MD5.hexdigest(self.email)
+  end
 
   before_save do
     self.token = Devise.friendly_token if self.token.nil?
   end
 
-  has_one_document :user_option
-
-  has_many :tracks
-
   validates :username, :uniqueness => true
   validates :email, :uniqueness => true
   validates :token, :uniqueness => true
 
+  scope :find_by_query, -> (query) {
+    if query.length > 3
+      where "email like ? or username like ?", "%#{query}%@%", "%#{query}%"
+    else
+      where "0=1"
+    end
+  }
+
+  has_one_document :user_option
+  has_many :tracks
   has_many :friendships_as_initiator, :class_name => "Friendship", :foreign_key => "initiator_id"
   has_many :friendships_as_consumer, :class_name => "Friendship", :foreign_key => "consumer_id"
+
   def friendships
     friendships_as_initiator + friendships_as_consumer
   end
@@ -56,13 +67,15 @@ class User < ActiveRecord::Base
   end
 
   def to_json(options={})
-    super(:include => [{ :friendships =>
-      {
-        :include => [
-          {:initiator => {:only => :username}},
-          {:consumer => {:only => :username}}
-        ]
-      }
-    }, :friends => {:only => :username}])
+    super(:include => [
+      {:friendships => {
+          :include => [
+            {:initiator => {:only => :username, :methods => :email_hash}},
+            {:consumer => {:only => :username, :methods => :email_hash}}
+          ]
+        }
+      },
+      :friends => {:only => :username, :methods => :email_hash}],
+    :methods => :email_hash)
   end
 end
