@@ -1,5 +1,6 @@
 class Friendship < ActiveRecord::Base
-  attr_accessible :consumer_id, :confirmed 
+  attr_accessible :consumer_id
+  attr_protected :confirmed
   belongs_to :initiator, :class_name => "User"
   belongs_to :consumer, :class_name => "User"
 
