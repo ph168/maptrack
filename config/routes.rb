@@ -23,8 +23,9 @@ MapTrack::Application.routes.draw do
   put 'user' => 'users#update'
   patch 'user' => 'users#update'
   match 'user/:name.:format' => 'users#show', :via => [:get], :constraints => {:name => /.*/}, :format => false
-  post 'user/friendship' => 'users#request_friendship'
-  put 'user/friendship/:id/confirm' => 'users#confirm_friendship'
-  patch 'user/friendship/:id/confirm' => 'users#confirm_friendship'
-  delete 'user/friendship/:id' => 'users#destroy_friendship'
+
+  post 'friendship' => 'friendships#request_friendship'
+  put 'friendship/:id/confirm' => 'friendships#confirm_friendship'
+  patch 'friendship/:id/confirm' => 'friendships#confirm_friendship'
+  delete 'friendship/:id' => 'friendships#destroy_friendship'
 end
