@@ -115,7 +115,7 @@ class TracksController < ApplicationController
   end
 
   def tracks_for_friends_of_current_user
-    Track.find_all_by_user_id(current_user.friends.select{|u| u.id})
+    Track.find_all_by_user_id_and_public(current_user.friends.select{|u| u.id}, true)
   end
 
   # Returns the track with given id if it is owned by current_user
