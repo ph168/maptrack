@@ -26,6 +26,7 @@ gem 'taps'
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'daemons'
 gem 'delayed_job_mongoid'
+gem 'websocket-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

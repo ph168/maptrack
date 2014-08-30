@@ -9,6 +9,9 @@ class FriendshipsController < ApplicationController
 
     respond_to do |format|
       if @friendship.save
+        friends_channel = WebsocketRails[(@friendship.consumer.email + "_friends").to_sym]
+        friends_channel.make_private
+        friends_channel.trigger 'request', "A new friendship was requested"
         format.html { redirect_to :action => :index, notice: 'Friendship was successfully requested.' }
         format.json { render json: @friendship, status: :created, location: @user }
       else
