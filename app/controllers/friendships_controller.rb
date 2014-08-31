@@ -9,9 +9,8 @@ class FriendshipsController < ApplicationController
 
     respond_to do |format|
       if @friendship.save
-        friends_channel = WebsocketRails[(@friendship.consumer.email + "_friends").to_sym]
-        friends_channel.make_private
-        friends_channel.trigger 'request', "A new friendship was requested"
+        consumer = @friendship.consumer
+        channel_for(consumer).trigger 'request', consumer.as_json
         format.html { redirect_to :action => :index, notice: 'Friendship was successfully requested.' }
         format.json { render json: @friendship, status: :created, location: @user }
       else
@@ -28,6 +27,8 @@ class FriendshipsController < ApplicationController
 
     respond_to do |format|
       if @friendship.save
+        initiator = @friendship.initiator
+        channel_for(initiator).trigger 'confirm', initiator.as_json
         format.html { redirect_to :action => :index, notice: 'Friendship was successfully confirmed.' }
         format.json { render json: @friendship, status: :created, location: @user }
       else
@@ -40,11 +41,24 @@ class FriendshipsController < ApplicationController
   # DELETE /friendship/:id
   def destroy_friendship
     @friendship = current_user.friendships.find(params[:id]).first
+    other_user = @friendship.initiator == current_user ? @friendship.consumer : @friendship.initiator
+    confirmed = @friendship.confirmed
     @friendship.destroy
+    if confirmed
+      channel_for(other_user).trigger 'destroy', other_user.as_json
+    else
+      channel_for(other_user).trigger 'reject', other_user.as_json
+    end
 
     respond_to do |format|
       format.html { redirect_to :action => :index, notice: 'Friendship was successfully removed.' }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def channel_for(user)
+    WebsocketRails[(user.token + "_friends").to_sym]
   end
 end
