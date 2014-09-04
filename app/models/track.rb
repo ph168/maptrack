@@ -7,6 +7,9 @@ class Track < ActiveRecord::Base
   has_one_document :summary
 
   scope :for_user, lambda {|user| where("user_id = ?", user.id)}
+  scope :visible_for_user, lambda {|user|
+    where("user_id = ? or (user_id in (?) and public=?)", user.id, user.friends, true)
+  }
 
   validates :name, :presence => true
   validates :summary, :presence => true
@@ -15,6 +18,10 @@ class Track < ActiveRecord::Base
   before_save do
     self.public = false if self.public.nil?
     self.share_token = Devise.friendly_token if self.share_token.nil?
+  end
+
+  after_create do
+    Story.new(track: self, user: self.user, action: "started a new track").save
   end
 
   def to_json(options={})

@@ -28,4 +28,10 @@ MapTrack::Application.routes.draw do
   put 'friendship/:id/confirm' => 'friendships#confirm_friendship'
   patch 'friendship/:id/confirm' => 'friendships#confirm_friendship'
   delete 'friendship/:id' => 'friendships#destroy_friendship'
+
+  get 'stories' => 'stories#index'
+  get 'stories/unseen/count' => 'stories#unseen_count'
+  put 'stories/seen' => 'stories#seen_all'
+  get 'stories/:id' => 'stories#show'
+  put 'stories/:id/seen' => 'stories#seen'
 end

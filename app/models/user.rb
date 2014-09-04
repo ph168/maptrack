@@ -67,15 +67,17 @@ class User < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(:include => [
-      {:friendships => {
+    unless options[:noinclude]
+      include_options = [{
+        :friendships => {
           :include => [
             {:initiator => {:only => :username, :methods => :email_hash}},
             {:consumer => {:only => :username, :methods => :email_hash}}
           ]
         }
       },
-      :friends => {:only => :username, :methods => :email_hash}],
-    :methods => :email_hash)
+      :friends => {:only => :username, :methods => :email_hash}]
+    end
+    super({:include => include_options, :methods => :email_hash}.merge(options))
   end
 end
