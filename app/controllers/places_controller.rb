@@ -81,6 +81,6 @@ class PlacesController < ApplicationController
   end
 
   def find_track
-    @track = Track.find params[:track_id]
+    @track = Track.visible_for_user(current_user).find params[:track_id]
   end
 end

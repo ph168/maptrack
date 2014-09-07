@@ -11,6 +11,7 @@ MapTrack::Application.routes.draw do
       get 'place' => 'coordinates#place'
     end
     resources :places
+    resources :comments
   end
 
   get 'tracks/public/:share_token' => 'tracks#show'

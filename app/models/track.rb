@@ -5,6 +5,7 @@ class Track < ActiveRecord::Base
   has_many :coordinates, :order => "time"
 
   has_one_document :summary
+  has_many_documents :comments
 
   scope :for_user, lambda {|user| where("user_id = ?", user.id)}
   scope :visible_for_user, lambda {|user|
