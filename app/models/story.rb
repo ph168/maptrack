@@ -2,6 +2,7 @@ class Story
   include Mongoid::Document
   include Mongoid::ActiveRecordBridge
   include Mongoid::Timestamps
+  include ChannelsHelper
 
   belongs_to_record :user
   belongs_to_record :track
@@ -27,6 +28,14 @@ class Story
     not_in(:seen_by => user.id)
     .desc(:created_at)
   }
+
+  after_create do
+    if track.public
+      user.friends.each { |u|
+        channel_for(u).trigger 'newStory', self
+      }
+    end
+  end
 
   def subject
     user.as_json(:noinclude => true, :only => :username, :methods => :email_hash)
