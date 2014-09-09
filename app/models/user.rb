@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   end
 
   validates :username, :uniqueness => true
-  validates :email, :uniqueness => true
+  validates :username, :presence => true
   validates :token, :uniqueness => true
 
   scope :find_by_query, -> (query) {
