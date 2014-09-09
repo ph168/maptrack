@@ -10,9 +10,6 @@ class User < ActiveRecord::Base
 
   after_initialize do
     self.email_hash = Digest::MD5.hexdigest(self.email)
-  end
-
-  before_save do
     self.token = Devise.friendly_token if self.token.nil?
   end
 
